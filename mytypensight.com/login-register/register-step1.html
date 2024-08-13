@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat - Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-map.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2d2d2d;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo img {
+            height: 40px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #f0c419;
+        }
+        .search-bar input {
+            padding: 8px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            width: 220px;
+            background-color: #333;
+            color: white;
+        }
+        .search-bar button {
+            padding: 8px 15px;
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-bar button:hover {
+            background-color: #005a9e;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 20px 20px;
+        }
+        section {
+            background-color: #444;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            color: #f0c419;
+            margin-top: 0;
+            border-bottom: 2px solid #f0c419;
+            padding-bottom: 0.5rem;
+            font-size: 1.5em;
+        }
+        form label {
+            display: block;
+            margin-top: 1rem;
+            color: #ccc;
+        }
+        form input, form button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background-color: #555;
+            color: #eee;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        form button {
+            background-color: #0078d4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #005a9e;
+        }
+        .next-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .next-button button {
+            background-color: #0078d4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .next-button button:hover {
+            background-color: #005a9e;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            width: 100%;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="path-to-your-logo-image.png" alt="Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search profiles..." id="searchInput">
+            <button id="searchButton">Search</button>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="settings.html">Settings</a>
+            <a href="platforms.html">Platforms</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="login.html">Login</a>
+        </nav>
+        <div class="user-profile">
+            <img src="path-to-your-profile-image.jpg" alt="Profile">
+        </div>
+        <div class="notifications">
+            <img src="path-to-your-notifications-icon.png" alt="Notifications">
+        </div>
+    </header>
+
+    <div class="content">
+        <section>
+            <h2>Register</h2>
+            <form id="register-form" action="register-step2.html" method="GET">
+                <label for="register-username">Username</label>
+                <input type="text" id="register-username" placeholder="Username" required>
+                <label for="register-email">Email</label>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <label for="register-password">Password</label>
+                <input type="password" id="register-password" placeholder="Password" required>
+                <div class="next-button">
+                    <button type="submit">Next</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Live Chat. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
+

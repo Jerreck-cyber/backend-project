@@ -1,0 +1,1007 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Personality.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        /* Main styles for user27.html */
+        body {
+            font-family: 'Oswald', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-y: scroll;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.light-theme {
+            background-color: #fff;
+            color: #000;
+        }
+        body.dark-theme {
+            background-color: #000;
+            color: #fff;
+        }
+        body.blue-theme {
+            background-color: #1e90ff;
+            color: #fff;
+        }
+        body.green-theme {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        body.red-theme {
+            background-color: #FF5733;
+            color: #fff;
+        }
+        body.purple-theme {
+            background-color: #800080;
+            color: #fff;
+        }
+        body.orange-theme {
+            background-color: #FFA500;
+            color: #fff;
+        }
+        body.teal-theme {
+            background-color: #008080;
+            color: #fff;
+        }
+        body.pink-theme {
+            background-color: #FF69B4;
+            color: #fff;
+        }
+        body.intimate-theme {
+            background-color: #2b1d1f;
+            color: #e0c1b3;
+        }
+        header {
+            background-color: rgba(25, 116, 126, 0.8);
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+        }
+        header .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        header nav a:hover {
+            color: #f0c419;
+        }
+        header .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        header .search-bar input {
+            padding: 8px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            width: 220px;
+        }
+        header .search-bar button {
+            padding: 8px 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: rgba(25, 116, 126, 0.9);
+            padding: 60px 20px 20px 20px;
+            z-index: 900;
+            transition: left 0.3s ease;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar nav {
+            margin-top: 60px;
+        }
+        .sidebar nav a {
+            color: white;
+            text-decoration: none;
+            margin: 15px 0;
+            display: block;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .sidebar nav a:hover {
+            color: #f0c419;
+        }
+        .sidebar-footer {
+            margin-top: auto;
+            text-align: center;
+            color: white;
+        }
+        .sidebar-footer p {
+            margin: 10px 0;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            padding-top: 100px;
+            transition: margin-left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .profile-header img.profile-picture {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            border: 3px solid white;
+        }
+        .profile-header h1 {
+            font-size: 2.5em;
+            margin: 20px 0 10px;
+        }
+        .profile-header p {
+            margin: 5px 0;
+        }
+        .profile-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .profile-actions button {
+            background-color: rgba(25, 116, 126, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .profile-actions button:hover {
+            background-color: rgba(20, 89, 96, 0.8);
+            transform: scale(1.05);
+        }
+        .activity-feed-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        .activity-feed, .friends-followers {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .activity-feed h2, .friends-followers h2 {
+            margin-top: 0;
+        }
+        .scroll-btn {
+            background: none;
+            border: none;
+            font-size: 2em;
+            color: #333;
+            cursor: pointer;
+        }
+        footer {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            text-align: center;
+            padding: 15px 20px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 2;
+        }
+        #scene-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .settings-menu {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background: rgba(51, 51, 51, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            display: none;
+            transition: opacity 0.3s ease;
+        }
+        .settings-menu.open {
+            display: block;
+            opacity: 1;
+        }
+        .settings-menu h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .settings-menu label {
+            display: block;
+            margin: 10px 0;
+        }
+        .settings-menu input[type="file"] {
+            display: none;
+        }
+        .settings-menu input[type="file"] + label {
+            background: #444;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .settings-menu input[type="file"] + label:hover {
+            background: #555;
+        }
+        .settings-menu .theme-options {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .settings-menu .theme-options div {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .settings-menu .theme-options div:hover {
+            transform: scale(1.1);
+        }
+        .edit-profile-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(51, 51, 51, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            position: absolute;
+            top: 120px;
+            z-index: 4;
+        }
+        .edit-profile-form input,
+        .edit-profile-form button {
+            margin: 10px 0;
+        }
+
+        /* Sidebar toggle button */
+        .sidebar-toggle {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            background: transparent;
+            color: white;
+            padding: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .hamburger-icon {
+            display: inline-block;
+            width: 18px;
+            height: 2px;
+            background-color: #fff;
+            position: relative;
+        }
+        .hamburger-icon::before,
+        .hamburger-icon::after {
+            content: '';
+            display: inline-block;
+            width: 18px;
+            height: 2px;
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+        .hamburger-icon::before {
+            top: -5px;
+        }
+        .hamburger-icon::after {
+            top: 5px;
+        }
+        .sidebar-toggle:hover .hamburger-icon::before {
+            transform: translateY(5px) rotate(45deg);
+        }
+        .sidebar-toggle:hover .hamburger-icon::after {
+            transform: translateY(-5px) rotate(-45deg);
+        }
+        .sidebar-toggle:hover .hamburger-icon {
+            background-color: transparent;
+        }
+
+        /* Pop-up for Insight */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            background: none; /* Remove background */
+        }
+        .popup-content {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 10px;
+            border-radius: 8px;
+            width: 70%;
+            height: 80%;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 2px solid #440044;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .top-menu {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(30, 30, 30, 0.85);
+            padding: 5px 0;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+        .top-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            transition: background 0.3s ease, color 0.3s ease;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .top-menu a:hover, .top-menu a.active {
+            background: rgba(220, 20, 60, 0.3);
+            color: #DC143C;
+        }
+        .popup-main {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+        }
+        .popup-sidebar {
+            width: 160px;
+            background: rgba(30, 30, 30, 0.85);
+            padding: 10px;
+            border-radius: 8px;
+            margin-right: 10px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        .popup-sidebar.active {
+            display: flex;
+        }
+        .popup-sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .popup-sidebar li {
+            padding: 7px;
+            margin-bottom: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .popup-sidebar li:hover, .popup-sidebar li.active {
+            background: rgba(220, 20, 60, 0.3);
+            color: #DC143C;
+        }
+        .popup-details {
+            flex-grow: 1;
+            background: rgba(30, 30, 30, 0.85);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        .popup-details h2 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #DC143C;
+        }
+        .popup-details p {
+            margin: 5px 0;
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close-button:hover {
+            color: #DC143C;
+        }
+
+        /* Additional Enhancements */
+        .popup-details p {
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+        .popup-sidebar li.active::before {
+            content: '•';
+            color: #DC143C;
+            margin-right: 5px;
+        }
+        .popup-sidebar ul {
+            overflow-y: auto;
+            max-height: calc(100% - 20px);
+        }
+        .mood-bar {
+            width: 100%;
+            height: 10px;
+            border-radius: 4px;
+            margin: 5px 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(145deg, #444, #555);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        .mood-bar div {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.7em;
+            position: relative;
+            z-index: 1;
+            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+        .mood-bar.ecstasy div {
+            background: linear-gradient(to bottom, #ff6f61, #ff3e3e);
+        }
+        .mood-bar.joy div {
+            background: linear-gradient(to bottom, #ff7e5f, #ff3f3f);
+        }
+        .mood-bar.serenity div {
+            background: linear-gradient(to bottom, #ff3e3e, #ff7e5f);
+        }
+        .mood-bar.admiration div {
+            background: linear-gradient(to bottom, #adff2f, #7fff00);
+        }
+        .mood-bar.trust div {
+            background: linear-gradient(to bottom, #7fff00, #adff2f);
+        }
+        .mood-bar.acceptance div {
+            background: linear-gradient(to bottom, #7fff00, #32cd32);
+        }
+        .mood-bar.terror div {
+            background: linear-gradient(to bottom, #00bfff, #1e90ff);
+        }
+        .mood-bar.fear div {
+            background: linear-gradient(to bottom, #1e90ff, #00bfff);
+        }
+        .mood-bar.apprehension div {
+            background: linear-gradient(to bottom, #00bfff, #1e90ff);
+        }
+        .mood-bar.grief div {
+            background: linear-gradient(to bottom, #708090, #2f4f4f);
+        }
+        .mood-bar.sadness div {
+            background: linear-gradient(to bottom, #2f4f4f, #708090);
+        }
+        .mood-bar.pensiveness div {
+            background: linear-gradient(to bottom, #2f4f4f, #708090);
+        }
+        .mood-bar.amazement div {
+            background: linear-gradient(to bottom, #00bfff, #1e90ff);
+        }
+        .mood-bar.surprise div {
+            background: linear-gradient(to bottom, #00bfff, #1e90ff);
+        }
+        .mood-bar.distraction div {
+            background: linear-gradient(to bottom, #00bfff, #1e90ff);
+        }
+        .mood-bar.vigilance div {
+            background: linear-gradient(to bottom, #ff8c00, #ff4500);
+        }
+        .mood-bar.anticipation div {
+            background: linear-gradient(to bottom, #ff8c00, #ff4500);
+        }
+        .mood-bar.interest div {
+            background: linear-gradient(to bottom, #ff8c00, #ff4500);
+        }
+        .mood-bar.desire div {
+            background: linear-gradient(to bottom, #ff69b4, #ff1493);
+        }
+        .mood-bar.lust div {
+            background: linear-gradient(to bottom, #ff1493, #c71585);
+        }
+        .mood-bar.passion div {
+            background: linear-gradient(to bottom, #c71585, #8b0000);
+        }
+        .mood-bar.arousal div {
+            background: linear-gradient(to bottom, #ff4500, #ff6347);
+        }
+        .mood-bar div:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <span class="hamburger-icon"></span>
+    </button>
+    <div class="sidebar" id="sidebar">
+        <nav>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="editProfileLink">Edit Profile</a>
+            <div id="editProfileOptions" class="hidden">
+                <label for="uploadProfilePicture">Upload Profile Picture</label>
+                <input type="file" id="uploadProfilePicture">
+                <label for="uploadBackground">Upload Webpage Background</label>
+                <input type="file" id="uploadBackground">
+                <button id="removeBackgroundButton">Remove Background</button>
+                <h3>Theme</h3>
+                <div class="theme-options">
+                    <div class="theme-option" data-theme="dark-theme" style="background: #333;" title="Dark Theme"></div>
+                    <div class="theme-option" data-theme="light-theme" style="background: #f0c419;" title="Light Theme"></div>
+                    <div class="theme-option" data-theme="blue-theme" style="background: #1e90ff;" title="Blue Theme"></div>
+                    <div class="theme-option" data-theme="green-theme" style="background: #4CAF50;" title="Green Theme"></div>
+                    <div class="theme-option" data-theme="red-theme" style="background: #FF5733;" title="Red Theme"></div>
+                    <div class="theme-option" data-theme="purple-theme" style="background: #800080;" title="Purple Theme"></div>
+                    <div class="theme-option" data-theme="orange-theme" style="background: #FFA500;" title="Orange Theme"></div>
+                    <div class="theme-option" data-theme="teal-theme" style="background: #008080;" title="Teal Theme"></div>
+                    <div class="theme-option" data-theme="pink-theme" style="background: #FF69B4;" title="Pink Theme"></div>
+                    <div class="theme-option" data-theme="intimate-theme" style="background: #2b1d1f;" title="Intimate Theme"></div>
+                </div>
+            </div>
+            <a href="#" id="uploadVideoLink">Upload Video</a>
+            <input type="file" id="uploadVideo" class="hidden" accept="video/*">
+            <a href="uploads.html">Uploads</a>
+            <a href="#">Settings</a>
+            <a href="#">Privacy</a>
+            <a href="#">Logout</a>
+            <a href="#" id="insightLink">Insight</a>
+        </nav>
+        <div class="sidebar-footer">
+            <p>&copy; 2024 Personality.com. All rights reserved.</p>
+            <div>
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+       <header id="header">
+    <nav>
+        <div class="logo">Personality.com</div>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="../main-page/index3.html">Home</a>
+                <a href="../login-register/register-step1.html">Register</a>
+                <a href="../login-register/login.html">Login</a>
+                <a href="../live-stream/live10.html">Live Stream</a>
+                <a href="../music visualizer/public/index.html">Music Visualizer</a>
+                <a href="../interactive-map/interactive-map.html">Interactive Map</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search profiles..." id="searchInput">
+                <button id="searchButton">Search</button>
+            </div>
+        </div>     </nav>
+    </header>
+    <div class="content" id="content">
+        <div class="profile-header">
+            <img class="profile-picture" id="profilePicture" src="" alt="Profile Picture">
+            <div class="profile-info">
+                <h1 id="username">Username</h1>
+                <p id="bio">Bio: A short description about the user.</p>
+            </div>
+        </div>
+        <div class="profile-actions">
+            <button>Follow</button>
+            <button>Subscribe</button>
+        </div>
+        <div class="activity-feed-wrapper">
+            <button id="scrollLeft" class="scroll-btn">&#9664;</button>
+            <div class="activity-feed" id="activityFeed">
+                <h2>Activity Feed</h2>
+                <!-- Most recent uploads will be dynamically inserted here -->
+            </div>
+            <button id="scrollRight" class="scroll-btn">&#9654;</button>
+        </div>
+        <div class="friends-followers">
+            <h2>Friends/Followers</h2>
+            <p>Friend 1</p>
+            <p>Friend 2</p>
+        </div>
+    </div>
+    <div id="scene-container"></div>
+    <div class="settings-menu" id="settingsMenu">
+        <h2>Settings</h2>
+        <label for="backgroundUpload">Upload Custom Background</label>
+        <input type="file" id="backgroundUpload">
+        <label for="backgroundUpload">Choose File</label>
+        <h3>Theme</h3>
+        <div class="theme-options">
+            <div class="theme-option" data-theme="dark-theme" style="background: #333;" title="Dark Theme"></div>
+            <div class="theme-option" data-theme="light-theme" style="background: #f0c419;" title="Light Theme"></div>
+            <div class="theme-option" data-theme="blue-theme" style="background: #1e90ff;" title="Blue Theme"></div>
+            <div class="theme-option" data-theme="green-theme" style="background: #4CAF50;" title="Green Theme"></div>
+            <div class="theme-option" data-theme="red-theme" style="background: #FF5733;" title="Red Theme"></div>
+            <div class="theme-option" data-theme="purple-theme" style="background: #800080;" title="Purple Theme"></div>
+            <div class="theme-option" data-theme="orange-theme" style="background: #FFA500;" title="Orange Theme"></div>
+            <div class="theme-option" data-theme="teal-theme" style="background: #008080;" title="Teal Theme"></div>
+            <div class="theme-option" data-theme="pink-theme" style="background: #FF69B4;" title="Pink Theme"></div>
+            <div class="theme-option" data-theme="intimate-theme" style="background: #2b1d1f;" title="Intimate Theme"></div>
+        </div>
+    </div>
+    <div class="edit-profile-form" id="editProfileForm">
+        <h2>Edit Profile</h2>
+        <label for="editUsername">Username</label>
+        <input type="text" id="editUsername" placeholder="Enter new username">
+        <label for="editBio">Bio</label>
+        <textarea id="editBio" placeholder="Enter new bio"></textarea>
+        <label for="editProfilePicture">Profile Picture</label>
+        <input type="file" id="editProfilePicture">
+        <label for="editBackground">Upload Custom Background</label>
+        <input type="file" id="editBackground">
+        <button id="removeBackgroundButton">Remove Background</button>
+        <h3>Theme</h3>
+        <div class="theme-options">
+            <div class="theme-option" data-theme="dark-theme" style="background: #333;" title="Dark Theme"></div>
+            <div class="theme-option" data-theme="light-theme" style="background: #f0c419;" title="Light Theme"></div>
+            <div class="theme-option" data-theme="blue-theme" style="background: #1e90ff;" title="Blue Theme"></div>
+            <div class="theme-option" data-theme="green-theme" style="background: #4CAF50;" title="Green Theme"></div>
+            <div class="theme-option" data-theme="red-theme" style="background: #FF5733;" title="Red Theme"></div>
+            <div class="theme-option" data-theme="purple-theme" style="background: #800080;" title="Purple Theme"></div>
+            <div class="theme-option" data-theme="orange-theme" style="background: #FFA500;" title="Orange Theme"></div>
+            <div class="theme-option" data-theme="teal-theme" style="background: #008080;" title="Teal Theme"></div>
+            <div class="theme-option" data-theme="pink-theme" style="background: #FF69B4;" title="Pink Theme"></div>
+            <div class="theme-option" data-theme="intimate-theme" style="background: #2b1d1f;" title="Intimate Theme"></div>
+        </div>
+        <button id="saveProfileButton">Save</button>
+        <button id="cancelEditProfileButton">Cancel</button>
+    </div>
+    <div id="insightPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-button" id="closeInsight">&times;</span>
+            <div class="top-menu">
+                <a href="#" id="moodMeterLink" class="active">Mood Meter</a>
+                <a href="#" id="personalityReadingsLink">Personality Readings</a>
+                <a href="#" id="abilitiesHealthLink">Abilities & Health</a>
+                <a href="#" id="tastesLink">Tastes</a>
+            </div>
+            <div class="popup-main">
+                <div class="popup-sidebar active" id="moodMeterOptions">
+                    <ul>
+                        <li data-detail="positiveEmotions">Positive Emotions</li>
+                        <li data-detail="negativeEmotions">Negative Emotions</li>
+                        <li data-detail="surprise">Surprise</li>
+                        <li data-detail="anticipation">Anticipation</li>
+                        <li data-detail="desire">Desire</li>
+                    </ul>
+                </div>
+                <div class="popup-sidebar" id="personalityReadingsOptions">
+                    <ul>
+                        <li data-detail="mbti">MBTI</li>
+                        <li data-detail="tritype">Tritype</li>
+                        <li data-detail="enneagram">Enneagram</li>
+                        <li data-detail="socionics">Socionics</li>
+                        <li data-detail="objectivePersonality">Objective Personality</li>
+                        <li data-detail="mmpi">MMPI</li>
+                        <li data-detail="bigFive">Big Five</li>
+                    </ul>
+                </div>
+                <div class="popup-sidebar" id="abilitiesHealthOptions">
+                    <ul>
+                        <li data-detail="physicalAbilities">Physical Abilities</li>
+                        <li data-detail="mentalAbilities">Mental Abilities</li>
+                        <li data-detail="healthLevels">Health Levels</li>
+                    </ul>
+                </div>
+                <div class="popup-sidebar" id="tastesOptions">
+                    <ul>
+                        <li data-detail="music">Music</li>
+                        <li data-detail="movies">Movies</li>
+                        <li data-detail="preferences18">18+ Preferences</li>
+                    </ul>
+                </div>
+                <div class="popup-details" id="detailsSection">
+                    <!-- Details will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        const editProfileLink = document.getElementById('editProfileLink');
+        const editProfileForm = document.getElementById('editProfileForm');
+        const saveProfileButton = document.getElementById('saveProfileButton');
+        const cancelEditProfileButton = document.getElementById('cancelEditProfileButton');
+        const editUsername = document.getElementById('editUsername');
+        const username = document.getElementById('username');
+        const editBio = document.getElementById('editBio');
+        const bio = document.getElementById('bio');
+        const editProfilePicture = document.getElementById('editProfilePicture');
+        const profilePicture = document.getElementById('profilePicture');
+        const editBackground = document.getElementById('editBackground');
+        const backgroundUpload = document.getElementById('backgroundUpload');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const removeBackgroundButton = document.getElementById('removeBackgroundButton');
+
+        editProfileLink.addEventListener('click', () => {
+            editProfileForm.style.display = 'flex';
+        });
+
+        cancelEditProfileButton.addEventListener('click', () => {
+            editProfileForm.style.display = 'none';
+        });
+
+        saveProfileButton.addEventListener('click', () => {
+            username.textContent = editUsername.value || 'Username';
+            bio.textContent = 'Bio: ' + (editBio.value || 'A short description about the user.');
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                profilePicture.src = e.target.result;
+            };
+            if (editProfilePicture.files[0]) {
+                reader.readAsDataURL(editProfilePicture.files[0]);
+            }
+
+            const backgroundReader = new FileReader();
+            backgroundReader.onload = function (e) {
+                document.body.style.backgroundImage = `url(${e.target.result})`;
+                document.body.style.backgroundSize = 'cover';
+            };
+            if (editBackground.files[0]) {
+                backgroundReader.readAsDataURL(editBackground.files[0]);
+            }
+
+            editProfileForm.style.display = 'none';
+        });
+
+        const changeBackground = (inputElement) => {
+            const backgroundReader = new FileReader();
+            backgroundReader.onload = function (e) {
+                document.body.style.backgroundImage = `url(${e.target.result})`;
+                document.body.style.backgroundSize = 'cover';
+            };
+            if (inputElement.files[0]) {
+                backgroundReader.readAsDataURL(inputElement.files[0]);
+            }
+        };
+
+        backgroundUpload.addEventListener('change', () => {
+            changeBackground(backgroundUpload);
+        });
+
+        editBackground.addEventListener('change', () => {
+            changeBackground(editBackground);
+        });
+
+        removeBackgroundButton.addEventListener('click', () => {
+            document.body.style.backgroundImage = '';
+            document.body.style.backgroundColor = '';
+            editBackground.value = '';
+            backgroundUpload.value = '';
+        });
+
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                document.body.className = option.getAttribute('data-theme');
+            });
+        });
+
+        const insightLink = document.getElementById('insightLink');
+        const insightPopup = document.getElementById('insightPopup');
+        const closeInsight = document.getElementById('closeInsight');
+        const moodMeterLink = document.getElementById('moodMeterLink');
+        const personalityReadingsLink = document.getElementById('personalityReadingsLink');
+        const abilitiesHealthLink = document.getElementById('abilitiesHealthLink');
+        const tastesLink = document.getElementById('tastesLink');
+        const moodMeterOptions = document.getElementById('moodMeterOptions');
+        const personalityReadingsOptions = document.getElementById('personalityReadingsOptions');
+        const abilitiesHealthOptions = document.getElementById('abilitiesHealthOptions');
+        const tastesOptions = document.getElementById('tastesOptions');
+        const detailsSection = document.getElementById('detailsSection');
+
+        insightLink.addEventListener('click', () => {
+            insightPopup.style.display = 'flex';
+        });
+
+        closeInsight.addEventListener('click', () => {
+            insightPopup.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === insightPopup) {
+                insightPopup.style.display = 'none';
+            }
+        });
+
+        const showOptions = (button, options) => {
+            moodMeterOptions.style.display = 'none';
+            personalityReadingsOptions.style.display = 'none';
+            abilitiesHealthOptions.style.display = 'none';
+            tastesOptions.style.display = 'none';
+
+            options.style.display = 'block';
+            detailsSection.innerHTML = '<h2>Insight Details</h2><p>Select an option to see more details here.</p>';
+        };
+
+        moodMeterLink.addEventListener('click', () => {
+            showOptions(moodMeterLink, moodMeterOptions);
+        });
+
+        personalityReadingsLink.addEventListener('click', () => {
+            showOptions(personalityReadingsLink, personalityReadingsOptions);
+        });
+
+        abilitiesHealthLink.addEventListener('click', () => {
+            showOptions(abilitiesHealthLink, abilitiesHealthOptions);
+        });
+
+        tastesLink.addEventListener('click', () => {
+            showOptions(tastesLink, tastesOptions);
+        });
+
+        document.querySelectorAll('.popup-sidebar li').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.popup-sidebar li').forEach(li => li.classList.remove('active'));
+                this.classList.add('active');
+                const detail = this.getAttribute('data-detail');
+                showDetail(detail);
+            });
+        });
+
+        function showDetail(detail) {
+            detailsSection.innerHTML = '';
+            let content = '';
+
+            switch (detail) {
+                case 'positiveEmotions':
+                    content = `
+                        <h2>Positive Emotions</h2>
+                        <div class="mood-bar ecstasy"><div style="width: 70%;">Ecstasy</div></div>
+                        <div class="mood-bar joy"><div style="width: 60%;">Joy</div></div>
+                        <div class="mood-bar serenity"><div style="width: 50%;">Serenity</div></div>
+                        <div class="mood-bar admiration"><div style="width: 65%;">Admiration</div></div>
+                        <div class="mood-bar trust"><div style="width: 55%;">Trust</div></div>
+                        <div class="mood-bar acceptance"><div style="width: 45%;">Acceptance</div></div>`;
+                    break;
+                case 'negativeEmotions':
+                    content = `
+                        <h2>Negative Emotions</h2>
+                        <div class="mood-bar terror"><div style="width: 70%;">Terror</div></div>
+                        <div class="mood-bar fear"><div style="width: 60%;">Fear</div></div>
+                        <div class="mood-bar apprehension"><div style="width: 50%;">Apprehension</div></div>
+                        <div class="mood-bar grief"><div style="width: 70%;">Grief</div></div>
+                        <div class="mood-bar sadness"><div style="width: 60%;">Sadness</div></div>
+                        <div class="mood-bar pensiveness"><div style="width: 50%;">Pensiveness</div></div>`;
+                    break;
+                case 'surprise':
+                    content = `
+                        <h2>Surprise</h2>
+                        <div class="mood-bar amazement"><div style="width: 65%;">Amazement</div></div>
+                        <div class="mood-bar surprise"><div style="width: 55%;">Surprise</div></div>
+                        <div class="mood-bar distraction"><div style="width: 45%;">Distraction</div></div>`;
+                    break;
+                case 'anticipation':
+                    content = `
+                        <h2>Anticipation</h2>
+                        <div class="mood-bar vigilance"><div style="width: 65%;">Vigilance</div></div>
+                        <div class="mood-bar anticipation"><div style="width: 55%;">Anticipation</div></div>
+                        <div class="mood-bar interest"><div style="width: 45%;">Interest</div></div>`;
+                    break;
+                case 'desire':
+                    content = `
+                        <h2>Desire</h2>
+                        <div class="mood-bar desire"><div style="width: 80%;">Desire</div></div>
+                        <div class="mood-bar lust"><div style="width: 75%;">Lust</div></div>
+                        <div class="mood-bar passion"><div style="width: 70%;">Passion</div></div>
+                        <div class="mood-bar arousal"><div style="width: 85%;">Arousal</div></div>`;
+                    break;
+                case 'mbti':
+                    content = `<h2>MBTI</h2><p>MBTI Type: INTJ</p>`;
+                    break;
+                case 'tritype':
+                    content = `<h2>Tritype</h2><p>Tritype: 854</p>`;
+                    break;
+                case 'enneagram':
+                    content = `<h2>Enneagram</h2><p>Enneagram Type: Type 8</p>`;
+                    break;
+                case 'socionics':
+                    content = `<h2>Socionics</h2><p>Socionics: LIE</p>`;
+                    break;
+                case 'objectivePersonality':
+                    content = `<h2>Objective Personality</h2><p>Objective Personality: INTJ-Ti</p>`;
+                    break;
+                case 'mmpi':
+                    content = `<h2>MMPI</h2><p>MMPI: High scores on scales 2 and 9</p>`;
+                    break;
+                case 'bigFive':
+                    content = `<h2>Big Five</h2><p>Big Five: High Openness, Low Agreeableness</p>`;
+                    break;
+                case 'physicalAbilities':
+                    content = `<h2>Physical Abilities</h2><p>Strength: High</p><p>Agility: Medium</p>`;
+                    break;
+                case 'mentalAbilities':
+                    content = `<h2>Mental Abilities</h2><p>Intelligence: Very High</p>`;
+                    break;
+                case 'healthLevels':
+                    content = `<h2>Health Levels</h2><p>Health Level: Good</p><p>Energy Level: Moderate</p>`;
+                    break;
+                case 'music':
+                    content = `<h2>Music</h2><p>Favorite Music Genres: Rock, Classical</p>`;
+                    break;
+                case 'movies':
+                    content = `<h2>Movies</h2><p>Preferred Movie Genres: Sci-Fi, Drama</p>`;
+                    break;
+                case 'preferences18':
+                    content = `<h2>18+ Preferences</h2><p>18+ Preferences: BDSM, Role-Play</p>`;
+                    break;
+                default:
+                    content = `<h2>Details</h2><p>Details not found.</p>`;
+            }
+
+            detailsSection.innerHTML = content;
+        }
+    </script>
+</body>
+</html>
+

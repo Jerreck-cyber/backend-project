@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Music Visualizer</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: white;
+        }
+        canvas {
+            display: block;
+        }
+        #controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1;
+            color: white;
+        }
+        #controls label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button id="loginButton">Login with Spotify</button>
+    <button id="topTracksButton" style="display: none;">Fetch Top Tracks</button>
+    <div id="controls" style="display: none;">
+        <label for="barWidth">Bar Width:</label>
+        <input type="range" id="barWidth" name="barWidth" min="0.5" max="5" step="0.1" value="1.5">
+        
+        <label for="barHeight">Bar Height:</label>
+        <input type="range" id="barHeight" name="barHeight" min="0.5" max="3" step="0.1" value="1.5">
+    </div>
+    <canvas id="visualizer"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spotify-web-api-js/1.5.0/spotify-web-api.min.js"></script>
+    <script>
+        const canvas = document.getElementById('visualizer');
+        const canvasCtx = canvas.getContext('2d');
+        const barWidthControl = document.getElementById('barWidth');
+        const barHeightControl = document.getElementById('barHeight');
+        const loginButton = document.getElementById('loginButton');
+        const topTracksButton = document.getElementById('topTracksButton');
+
+        let audioCtx;
+        let analyser;
+        let audioSrc;
+        let audioElement;
+        let barWidth = 1.5;
+        let barHeightMultiplier = 1.5;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        barWidthControl.addEventListener('input', function() {
+            barWidth = parseFloat(this.value);
+        });
+
+        barHeightControl.addEventListener('input', function() {
+            barHeightMultiplier = parseFloat(this.value);
+        });
+
+        const _token = localStorage.getItem('spotify_token');
+
+        if (_token) {
+            document.getElementById('controls').style.display = 'block';
+            topTracksButton.style.display = 'block';
+
+            const spotifyApi = new SpotifyWebApi();
+            spotifyApi.setAccessToken(_token);
+
+            topTracksButton.addEventListener('click', async () => {
+                const topTracks = await getTopTracks(spotifyApi);
+                console.log(
+                    topTracks?.map(
+                        ({name, artists}) =>
+                            `${name} by ${artists.map(artist => artist.name).join(', ')}`
+                    )
+                );
+                if (topTracks && topTracks.length > 0) {
+                    startVisualizer(topTracks[0].preview_url);
+                }
+            });
+        } else {
+            loginButton.style.display = 'block';
+        }
+
+        loginButton.addEventListener('click', () => {
+            const client_id = 'e28d188f008c489aae294bae8420b298';
+            const redirect_uri = 'https://aca7-2600-6c56-5000-600-c03e-6863-7269-8759.ngrok-free.app/callback';
+
+            const authEndpoint = 'https://accounts.spotify.com/authorize';
+            const scopes = [
+                'user-read-currently-playing',
+                'user-read-playback-state',
+                'user-top-read',
+                'streaming',
+            ];
+
+            const authUrl = `${authEndpoint}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&scope=${encodeURIComponent(scopes.join(' '))}&response_type=token&show_dialog=true`;
+            window.location = authUrl;
+        });
+
+        async function fetchWebApi(endpoint, method, token, body) {
+            const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                method,
+                body: JSON.stringify(body)
+            });
+            return await res.json();
+        }
+
+        async function getTopTracks(spotifyApi) {
+            return (await spotifyApi.getMyTopTracks({
+                time_range: 'long_term',
+                limit: 5
+            })).items;
+        }
+
+        function startVisualizer(previewUrl) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 1024;
+
+            audioElement = new Audio(previewUrl);
+
+            audioSrc = audioCtx.createMediaElementSource(audioElement);
+            audioSrc.connect(analyser);
+            analyser.connect(audioCtx.destination);
+
+            audioElement.play().catch(error => {
+                console.error("Error playing the audio:", error);
+            });
+
+            visualize();
+
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function visualize() {
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                requestAnimationFrame(draw);
+                analyser.getByteFrequencyData(dataArray);
+
+                canvasCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const barWidthCalculated = (canvas.width / bufferLength) * barWidth;
+                let barHeight;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i] * barHeightMultiplier;
+
+                    const red = (barHeight + 100) % 255;
+                    const green = (x / canvas.width) * 255;
+                    const blue = 50 + (barHeight / 255) * 200;
+
+                    const gradient = canvasCtx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);
+                    gradient.addColorStop(0, `rgba(${red},${green},${blue},1)`);
+                    gradient.addColorStop(1, `rgba(${red},${green},${blue},0.5)`);
+
+                    canvasCtx.fillStyle = gradient;
+                    canvasCtx.fillRect(x, canvas.height - barHeight, barWidthCalculated, barHeight);
+                    x += barWidthCalculated + 1;
+                }
+            }
+
+            draw();
+        }
+    </script>
+</body>
+</html>
+
+

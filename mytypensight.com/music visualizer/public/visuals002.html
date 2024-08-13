@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Music Visualizer</title>
+    <link rel="icon" href="favicon.ico">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: white;
+        }
+        canvas {
+            display: block;
+        }
+        #audioFile {
+            margin: 20px;
+        }
+        #controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1;
+            color: white;
+        }
+        #controls label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button id="loginButton">Login with Spotify</button>
+    <button id="topTracksButton" style="display: none;">Fetch Top Tracks</button>
+    <div id="controls" style="display: none;">
+        <label for="barWidth">Bar Width:</label>
+        <input type="range" id="barWidth" name="barWidth" min="0.5" max="5" step="0.1" value="1.5">
+        
+        <label for="barHeight">Bar Height:</label>
+        <input type="range" id="barHeight" name="barHeight" min="0.5" max="3" step="0.1" value="1.5">
+    </div>
+    <canvas id="visualizer"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spotify-web-api-js/1.5.0/spotify-web-api.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

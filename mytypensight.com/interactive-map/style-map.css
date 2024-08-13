@@ -1,0 +1,164 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    color: white;
+    text-align: center;
+}
+
+nav {
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 500;
+}
+
+.content {
+    display: flex;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 8px;
+}
+
+#filters {
+    width: 25%;
+    background: transparent;
+    color: #eee;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 8px 0 0 8px;
+    box-shadow: none;
+    border: none;
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+#filters h2 {
+    margin-top: 0;
+    text-align: center;
+    color: #ccc;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+#filters h3 {
+    margin: 10px 0;
+    color: #f0f0f0;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#filters select, #filters button, #filters input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    background-color: #444;
+    color: #eee;
+    font-size: 1em;
+}
+
+#filters button {
+    background-color: #0078d4;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#filters button:hover {
+    background-color: #005a9e;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#map {
+    width: 75%;
+    height: 600px;
+    margin-left: 20px;
+    box-sizing: border-box;
+    border-radius: 0 8px 8px 0;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.search-bar {
+    margin: 10px 0;
+}
+
+.search-bar input {
+    padding: 5px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 4px;
+    border: 1px solid #666;
+    background-color: #444;
+    color: #ccc;
+}
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#viewToggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.charts-section {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.chart-container {
+    margin: 20px 0;
+}
+

@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style-map.css">
+    <title>Interactive Map</title>
+</head>
+<body>
+    <h1>Interactive Map</h1>
+    <nav>
+        <ul>
+            <li><a href="../main-page/index3.html">Home</a></li>
+            <li><a href="../login-register/register-step1.html">Register</a></li>
+            <li><a href="../login-register/login.html">Login</a></li>
+            <li><a href="../live-stream/live10.html">Live Stream</a></li>
+            <li><a href="../music visualizer/public/index.html">Music Visualizer</a></li>
+            <li><a href="../user profile/user34.html">User Profile</a></li>
+        </ul>
+    </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map - Personality.com</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: black;
+        }
+
+        .starry-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+            z-index: -1;
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            background-size: cover;
+            animation: rotate 100s infinite linear;
+        }
+
+        .sun {
+            top: 50%;
+            left: 10%;
+            width: 200px;
+            height: 200px;
+            background-image: url('path-to-sun-image.jpg');
+        }
+
+        .mercury {
+            top: 45%;
+            left: 15%;
+            width: 50px;
+            height: 50px;
+            background-image: url('path-to-mercury-image.jpg');
+        }
+
+        .venus {
+            top: 55%;
+            left: 18%;
+            width: 70px;
+            height: 70px;
+            background-image: url('path-to-venus-image.jpg');
+        }
+
+        .earth {
+            top: 50%;
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            background-image: url('path-to-earth-image.jpg');
+        }
+
+        .mars {
+            top: 45%;
+            left: 32%;
+            width: 60px;
+            height: 60px;
+            background-image: url('path-to-mars-image.jpg');
+        }
+
+        .jupiter {
+            top: 55%;
+            left: 40%;
+            width: 100px;
+            height: 100px;
+            background-image: url('path-to-jupiter-image.jpg');
+        }
+
+        .saturn {
+            top: 50%;
+            left: 50%;
+            width: 90px;
+            height: 90px;
+            background-image: url('path-to-saturn-image.jpg');
+        }
+
+        .uranus {
+            top: 45%;
+            left: 60%;
+            width: 70px;
+            height: 70px;
+            background-image: url('path-to-uranus-image.jpg');
+        }
+
+        .neptune {
+            top: 55%;
+            left: 70%;
+            width: 70px;
+            height: 70px;
+            background-image: url('path-to-neptune-image.jpg');
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            color: white;
+        }
+
+        header .logo {
+            font-size: 24px;
+        }
+
+        header .search-bar {
+            flex: 1;
+            margin: 0 20px;
+        }
+
+        header .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .content {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        #filters {
+            flex: 1;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        #map {
+            flex: 3;
+            height: 100%;
+            position: relative;
+        }
+
+        h2 {
+            color: white;
+        }
+
+        label,
+        select,
+        button {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        select,
+        input,
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #viewToggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #viewToggle:hover {
+            background: #0056b3;
+        }
+
+        .mapboxgl-popup-content {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .mapboxgl-popup-content h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #1E90FF;
+        }
+
+        .mapboxgl-popup-content p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .mapboxgl-popup-close-button {
+            color: white;
+        }
+
+        .charts-section {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            color: white;
+        }
+
+        .charts-section h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #1E90FF;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="starry-background"></div>
+    <div class="planet sun"></div>
+    <div class="planet mercury"></div>
+    <div class="planet venus"></div>
+    <div class="planet earth"></div>
+    <div class="planet mars"></div>
+    <div class="planet jupiter"></div>
+    <div class="planet saturn"></div>
+    <div class="planet uranus"></div>
+    <div class="planet neptune"></div>
+    <header>
+        <div class="logo">Personality.com</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search profiles..." id="searchInput">
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#">Profiles</a>
+            <a href="#">Blog</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Browse</a>
+        </nav>
+    </header>
+    <div class="content">
+        <div id="filters">
+            <h2>Filters</h2>
+            <label for="mbti">MBTI Type:</label>
+            <select id="mbti">
+                <option value="ISTJ">ISTJ</option>
+                <option value="ISFJ">ISFJ</option>
+                <option value="INFJ">INFJ</option>
+                <option value="INTJ">INTJ</option>
+                <option value="ISTP">ISTP</option>
+                <option value="ISFP">ISFP</option>
+                <option value="INFP">INFP</option>
+                <option value="INTP">INTP</option>
+                <option value="ESTP">ESTP</option>
+                <option value="ESFP">ESFP</option>
+                <option value="ENFP">ENFP</option>
+                <option value="ENTP">ENTP</option>
+                <option value="ESTJ">ESTJ</option>
+                <option value="ESFJ">ESFJ</option>
+                <option value="ENFJ">ENFJ</option>
+                <option value="ENTJ">ENTJ</option>
+            </select>
+            <label for="tritype">Tritype:</label>
+            <select id="tritype">
+                <option valueCertainly! Let's continue from where we left off:
+
+```html
+                <option value="ENTJ">ENTJ</option>
+            </select>
+            <label for="tritype">Tritype:</label>
+            <select id="tritype">
+                <option value="125">125</option>
+                <option value="136">136</option>
+                <!-- Add more tritype options here -->
+            </select>
+            <label for="enneagram">Enneagram Type:</label>
+            <select id="enneagram">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+            <label for="sociological">Sociological Factors:</label>
+            <select id="sociological">
+                <option value="Family">Family</option>
+                <option value="Education">Education</option>
+                <option value="Religion">Religion</option>
+                <option value="Community">Community</option>
+            </select>
+            <label for="economic">Economic Factors:</label>
+            <select id="economic">
+                <option value="Income">Income</option>
+                <option value="Employment Rate">Employment Rate</option>
+                <option value="GDP">GDP</option>
+                <option value="Inflation">Inflation</option>
+                <option value="Poverty Rate">Poverty Rate</option>
+            </select>
+            <label for="political">Political Factors:</label>
+            <select id="political">
+                <option value="Democracy">Democracy</option>
+                <option value="Republic">Republic</option>
+                <option value="Monarchy">Monarchy</option>
+                <option value="Communism">Communism</option>
+            </select>
+            <label for="relationship">Relationship Factors:</label>
+            <select id="relationship">
+                <option value="Marriage">Marriage</option>
+                <option value="Single">Single</option>
+                <option value="Divorced">Divorced</option>
+                <option value="In a relationship">In a relationship</option>
+            </select>
+            <button id="applyFilters">Apply Filters</button>
+            <button id="addFilterCategory">Add Filter Category</button>
+            <input type="text" id="newCategoryName" placeholder="New Category Name">
+            <button id="addCategory">Add Category</button>
+        </div>
+        <div id="map">
+            <button id="viewToggle">Toggle View</button>
+        </div>
+    </div>
+    <div class="charts-section">
+        <h2>Interactive Data Visualizations</h2>
+        <div id="charts-container">
+            <canvas id="myChart" width="400" height="200"></canvas>
+        </div>
+        <div id="profile-info">
+            <h3>Profile Information</h3>
+            <p id="profile-name"></p>
+            <p id="profile-filters"></p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Personality.com. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiamVycmVjayIsImEiOiJjbHhrajh6eGgwMXp4MmlwcDk5b3VsNWUzIn0.-Lgcpi44tH4Df3BkhlJJCg';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/satellite-streets-v11',
+            center: [-74.5, 40], // starting position [lng, lat]
+            zoom: 2, // starting zoom
+            renderWorldCopies: true // wraps the world map for a globe effect
+        });
+
+        map.on('style.load', () => {
+            map.setProjection('globe'); // makes the map look like a globe
+        });
+
+        const styles = [
+            'mapbox://styles/mapbox/satellite-streets-v11',
+            'mapbox://styles/mapbox/streets-v11',
+            'mapbox://styles/mapbox/light-v10'
+        ];
+        let currentStyleIndex = 0;
+
+        document.getElementById('viewToggle').onclick = function() {
+            currentStyleIndex = (currentStyleIndex + 1) % styles.length;
+            map.setStyle(styles[currentStyleIndex]);
+
+            if (styles[currentStyleIndex] === 'mapbox://styles/mapbox/light-v10') {
+                map.setProjection('mercator'); // switch to flat map view
+            } else {
+                map.setProjection('globe'); // switch back to globe view
+            }
+        };
+
+        // Add event listener to the search input
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = e.target.value;
+                fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${mapboxgl.accessToken}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.features && data.features.length > 0) {
+                            const [lng, lat] = data.features[0].center;
+                            map.flyTo({
+                                center: [lng, lat],
+                                zoom: 12,
+                                essential: true // this animation is considered essential with respect to prefers-reduced-motion
+                            });
+                            // Store the location coordinates in a global variable
+                            window.currentLocation = { lng, lat };
+                        } else {
+                            alert('Location not found');
+                        }
+                    })
+                    .catch(err => console.error('Error with geocoding API:', err));
+            }
+        });
+
+        // Function to fetch filter data (Simulated with mock data)
+        function fetchFilterData(location) {
+            return new Promise((resolve) => {
+                // Simulating an API call with a delay
+                setTimeout(() => {
+                    resolve({
+                        mbti: '40% ISTJ, 30% INFJ, 30% ENFP',
+                        tritype: '25% 125, 25% 136, 50% N/A',
+                        enneagram: '30% Type 1, 30% Type 2, 40% N/A',
+                        sociological: 'Family, Education, Religion, Community',
+                        economic: 'Average Income: $60,000, Employment Rate: 5%',
+                        political: '60% Democracy, 20% Republic, 20% N/A',
+                        relationship: '50% Single, 30% Married, 20% N/A'
+                    });
+                }, 1000);
+            });
+        }
+
+        // Function to update the profile information section
+        function updateProfileInfo(data) {
+            document.getElementById('profile-name').innerText = `Profile: ${document.getElementById('searchInput').value}`;
+            document.getElementById('profile-filters').innerHTML = `
+                <p>MBTI: ${data.mbti || 'N/A'}</p>
+                <p>Tritype: ${data.tritype || 'N/A'}</p>
+                <p>Enneagram: ${data.enneagram || 'N/A'}</p>
+                <p>Sociological Factors: ${data.sociological || 'N/A'}</p>
+                <p>Economic Factors: ${data.economic || 'N/A'}</p>
+                <p>Political Factors: ${data.political || 'N/A'}</p>
+                <p>Relationship Factors: ${data.relationship || 'N/A'}</p>
+            `;
+        }
+
+        // Add event listener to the apply filters button
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            if (window.currentLocation) {
+                const { lng, lat } = window.currentLocation;
+
+                fetchFilterData(window.currentLocation).then((data) => {
+                    const popupContent = `
+                        <h3>Information for ${document.getElementById('searchInput').value}</h3>
+                        <p>MBTI: ${data.mbti || 'N/A'}</p>
+                        <p>Tritype: ${data.tritype || 'N/A'}</p>
+                        <p>Enneagram: ${data.enneagram || 'N/A'}</p>
+                        <p>Sociological Factors: ${data.sociological || 'N/A'}</p>
+                        <p>Economic Factors: ${data.economic || 'N/A'}</p>
+                        <p>Political Factors: ${data.political || 'N/A'}</p>
+                        <p>Relationship Factors: ${data.relationship || 'N/A'}</p>
+                    `;
+
+                    const popup = new mapboxgl.Popup({ offset: 25 })
+                        .setLngLat([lng, lat])
+                        .setHTML(popupContent)
+                        .addTo(map);
+
+                                        updateProfileInfo(data);
+
+                    // Update the chart with new data
+                    updateChart(data);
+                });
+            } else {
+                alert('Please search for a location first.');
+            }
+        });
+
+        // Initialize Chart.js chart
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['MBTI', 'Tritype', 'Enneagram', 'Sociological', 'Economic', 'Political', 'Relationship'],
+                datasets: [{
+                    label: 'Percentage',
+                    data: [0, 0, 0, 0, 0, 0, 0],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Function to update the chart with new data
+        function updateChart(data) {
+            myChart.data.datasets[0].data = [
+                parseInt(data.mbti.match(/\d+/)) || 0,
+                parseInt(data.tritype.match(/\d+/)) || 0,
+                parseInt(data.enneagram.match(/\d+/)) || 0,
+                parseInt(data.sociological.match(/\d+/)) || 0,
+                parseInt(data.economic.match(/\d+/)) || 0,
+                parseInt(data.political.match(/\d+/)) || 0,
+                parseInt(data.relationship.match(/\d+/)) || 0
+            ];
+            myChart.update();
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+

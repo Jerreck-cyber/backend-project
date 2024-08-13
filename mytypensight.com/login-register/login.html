@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-map.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2d2d2d;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo img {
+            height: 40px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #f0c419;
+        }
+        .search-bar input {
+            padding: 8px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            width: 220px;
+            background-color: #333;
+            color: white;
+        }
+        .search-bar button {
+            padding: 8px 15px;
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-bar button:hover {
+            background-color: #005a9e;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 20px 20px;
+        }
+        section {
+            background-color: #444;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            color: #f0c419;
+            margin-top: 0;
+            border-bottom: 2px solid #f0c419;
+            padding-bottom: 0.5rem;
+            font-size: 1.5em;
+        }
+        form label {
+            display: block;
+            margin-top: 1rem;
+            color: #ccc;
+        }
+        form input, form button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background-color: #555;
+            color: #eee;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        form button {
+            background-color: #0078d4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #005a9e;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            width: 100%;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="path-to-your-logo-image.png" alt="Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search profiles..." id="searchInput">
+            <button id="searchButton">Search</button>
+        </div>
+        <nav>
+            <a href="../main-page/index3.html">Home</a>
+            <a href="../interactive-map/interactive-map.html">Interactive Map</a>
+            <a href="register-step1.html">Register</a>
+            <a href="login.html">Login</a>
+            <a href="../live-stream/live10.html">Live Stream</a>
+            <a href="../music visualizer/public/index.html">Music Visualizer</a>
+            <a href="../user profile/user34.html">User Profile</a>
+        </nav>
+        <div class="user-profile">
+            <img src="path-to-your-profile-image.jpg" alt="Profile">
+        </div>
+        <div class="notifications">
+            <img src="path-to-your-notifications-icon.png" alt="Notifications">
+        </div>
+    </header>
+
+    <div class="content">
+        <section>
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="Email" required>
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Live Chat. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const apiUrl = 'http://localhost:3000'; // Update with your server URL
+
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            try {
+                const response = await fetch(`${apiUrl}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const result = await response.text();
+                alert(result);
+                if (response.ok) {
+                    fetchProfile();
+                }
+            } catch (error) {
+                alert('Error logging in: ' + error.message);
+            }
+        });
+
+        async function fetchProfile() {
+            try {
+                const response = await fetch(`${apiUrl}/profile`);
+                const profile = await response.json();
+                document.getElementById('profile').textContent = JSON.stringify(profile, null, 2);
+            } catch (error) {
+                alert('Error fetching profile: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
+
