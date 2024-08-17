@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Initialize') {
+            steps {
+                script {
+                    // Clean workspace before starting
+                    deleteDir()
+                    // Clone the repository
+                    checkout scm
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Fetch World Bank Data') {
+            steps {
+                script {
+                    // Here, you can write a script or call a Python script that fetches data from the World Bank API
+                    sh 'python fetch_worldbank_data.py'
+                }
+            }
+        }
+
+        stage('Store Data in PostgreSQL') {
+            steps {
+                script {
+                    // After fetching, store the data in PostgreSQL
+                    sh 'python store_data_postgres.py'
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                cleanWs()
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline execution complete.'
+        }
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
