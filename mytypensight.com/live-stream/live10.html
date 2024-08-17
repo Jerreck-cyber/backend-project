@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Streaming Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Oswald', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2d2d2d;
+            color: #fff;
+            background-image: url('path-to-your-background-image.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .logo img {
+            height: 40px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #f0c419;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        .search-bar input {
+            padding: 8px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            width: 220px;
+            background-color: #333;
+            color: white;
+        }
+        .search-bar button {
+            padding: 8px 15px;
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-bar button:hover {
+            background-color: #005a9e;
+        }
+        .user-profile, .notifications {
+            display: flex;
+            align-items: center;
+        }
+        .user-profile img, .notifications img {
+            height: 30px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        main {
+            padding: 100px 20px 20px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+        }
+        .left-panel, .right-panel {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            flex: 1;
+        }
+        .left-panel {
+            max-width: 300px;
+        }
+        section {
+            margin-bottom: 2rem;
+            background-color: #444;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+        h2 {
+            color: #f0c419;
+            margin-top: 0;
+            border-bottom: 2px solid #f0c419;
+            padding-bottom: 0.5rem;
+        }
+        form label {
+            display: block;
+            margin-top: 1rem;
+            color: #ccc;
+        }
+        form input, form textarea, form select, form button {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background-color: #555;
+            color: #eee;
+            box-sizing: border-box;
+        }
+        form button {
+            background-color: #0078d4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #005a9e;
+        }
+        #stream-preview, #stream-chat, #stream-stats {
+            margin-top: 1rem;
+        }
+        #stream-preview {
+            text-align: center;
+        }
+        #live-video {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        #stream-chat {
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, Helvetica, sans-serif; /* Use a common font for live chat */
+        }
+        #chat-messages {
+            flex: 1;
+            border: 1px solid #555;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            height: 300px; /* Increased height for better visibility */
+            overflow-y: auto; /* Changed to auto for smoother scrolling */
+            background-color: #333;
+            border-radius: 4px;
+        }
+        .chat-message {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            background-color: #444;
+        }
+        .chat-message .username {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .chat-message .timestamp {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+        #chat-input {
+            flex: 1;
+            border-radius: 4px 0 0 4px;
+            border-right: none;
+            padding: 0.5rem;
+            border: 1px solid #555;
+            margin-right: -1px;
+        }
+        #send-chat {
+            flex: 0;
+            border-radius: 0 4px 4px 0;
+            border-left: none;
+            padding: 0.5rem;
+            background-color: #0078d4;
+            color: white;
+            border: 1px solid #0078d4;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #send-chat:hover {
+            background-color: #005a9e;
+        }
+        #stream-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="path-to-your-logo-image.png" alt="Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search profiles..." id="searchInput">
+            <button id="searchButton">Search</button>
+        </div>
+        <nav>
+            <a href="../main-page/index3.html">Home</a>
+            <a href="../interactive-map/interactive-map.html">Interactive Map</a>
+            <a href="../login-register/register-step1.html">Register</a>
+            <a href="../login-register/login.html">Login</a>
+            <a href="../music visualizer/public/index.html">Music Visualizer</a>
+            <a href="../user profile/user34.html">User Profile</a>
+        </nav>
+        <div class="user-profile">
+            <img src="path-to-your-profile-image.jpg" alt="Profile">
+        </div>
+        <div class="notifications">
+            <img src="path-to-your-notifications-icon.png" alt="Notifications">
+        </div>
+    </header>
+
+    <main>
+        <div class="left-panel">
+            <section id="stream-management">
+                <h2>Stream Management</h2>
+                <form id="stream-settings-form">
+                    <fieldset>
+                        <legend>Stream Settings</legend>
+                        <label for="stream-title">Stream Title:</label>
+                        <input type="text" id="stream-title" name="stream-title" required>
+
+                        <label for="stream-description">Stream Description:</label>
+                        <textarea id="stream-description" name="stream-description" required></textarea>
+
+                        <label for="obs-key">OBS Stream Key:</label>
+                        <input type="text" id="obs-key" name="obs-key" required>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Select Platforms</legend>
+                        <label for="youtube">YouTube:</label>
+                        <input type="checkbox" id="youtube" name="platforms" value="YouTube">
+
+                        <label for="twitch">Twitch:</label>
+                        <input type="checkbox" id="twitch" name="platforms" value="Twitch">
+
+                        <label for="facebook">Facebook:</label>
+                        <input type="checkbox" id="facebook" name="platforms" value="Facebook">
+
+                        <label for="chaturbate">Chaturbate:</label>
+                        <input type="checkbox" id="chaturbate" name="platforms" value="Chaturbate">
+                    </fieldset>
+
+                    <button type="submit">Save Settings</button>
+                </form>
+            </section>
+        </div>
+
+        <div class="right-panel">
+            <section id="dashboard">
+                <h2>Stream Dashboard</h2>
+                <div id="stream-preview">
+                    <h3>Live Stream Preview</h3>
+                    <label for="camera-select">Select Camera:</label>
+                    <select id="camera-select"></select>
+                    <video id="live-video" controls autoplay></video>
+                </div>
+                <div id="stream-chat">
+                    <h3>Live Chat</h3>
+                    <div id="chat-messages"></div>
+                    <div style="display: flex;">
+                        <input type="text" id="chat-input" placeholder="Type your message...">
+                        <button id="send-chat">Send</button>
+                    </div>
+                </div>
+                <div id="stream-stats">
+                    <p>Viewers: <span id="viewers-count">0</span></p>
+                    <p>Platforms: <span id="platforms-list"></span></p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Live Streaming Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('stream-settings-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Save stream settings logic
+            const streamTitle = document.getElementById('stream-title').value;
+            const streamDescription = document.getElementById('stream-description').value;
+            const obsKey = document.getElementById('obs-key').value;
+            const platforms = Array.from(document.querySelectorAll('input[name="platforms"]:checked')).map(cb => cb.value);
+
+            // Send the data to the server
+            fetch('/stream-settings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ streamTitle, streamDescription, obsKey, platforms })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Stream settings saved!');
+                } else {
+                    alert('Failed to save settings.');
+                }
+            });
+        });
+
+        document.getElementById('send-chat').addEventListener('click', function() {
+            const message = document.getElementById('chat-input').value;
+            if (message) {
+                const username = 'User'; // Replace with dynamic username
+                const timestamp = new Date().toLocaleTimeString();
+                addChatMessage(username, message, timestamp);
+                document.getElementById('chat-input').value = '';
+
+                // Send the chat message to the server
+                fetch('/send-chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, message, timestamp })
+                });
+            }
+        });
+
+        function addChatMessage(username, message, timestamp) {
+            const chatMessages = document.getElementById('chat-messages');
+            const newMessage = document.createElement('div');
+            newMessage.classList.add('chat-message');
+
+            const userElement = document.createElement('span');
+            userElement.classList.add('username');
+            userElement.textContent = username;
+
+            const timeElement = document.createElement('span');
+            timeElement.classList.add('timestamp');
+            timeElement.textContent = timestamp;
+
+            const messageElement = document.createElement('span');
+            messageElement.classList.add('message');
+            messageElement.innerHTML = formatMessage(message);
+
+            newMessage.appendChild(userElement);
+            newMessage.appendChild(timeElement);
+            newMessage.appendChild(messageElement);
+            chatMessages.appendChild(newMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        function formatMessage(message) {
+            // Convert URLs to clickable links
+            const urlPattern = /(https?:\/\/[^\s]+)/g;
+            return message.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
+        }
+
+        // Example: Update viewers count
+        function updateViewersCount(count) {
+            document.getElementById('viewers-count').textContent = count;
+        }
+
+        // Example: Update platforms list
+        function updatePlatformsList(platforms) {
+            document.getElementById('platforms-list').textContent = platforms.join(', ');
+        }
+
+        // Real-time updates using WebSockets
+        const socket = new WebSocket('ws://localhost:3000');
+
+        socket.addEventListener('message', function(event) {
+            const data = JSON.parse(event.data);
+            if (data.type === 'viewersCount') {
+                updateViewersCount(data.count);
+            } else if (data.type === 'newChatMessage') {
+                addChatMessage(data.username, data.message, data.timestamp);
+            }
+        });
+
+        // Placeholder logic to simulate streaming and chat functionalities
+        updateViewersCount(123);
+        updatePlatformsList(['YouTube', 'Twitch', 'Facebook']);
+
+        // Display camera feed and handle multiple cameras
+        async function startCamera() {
+            const cameraSelect = document.getElementById('camera-select');
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                
+                // Populate camera options
+                cameraSelect.innerHTML = '';
+                videoDevices.forEach((device, index) => {
+                    const option = document.createElement('option');
+                    option.value = device.deviceId;
+                    option.textContent = device.label || `Camera ${index + 1}`;
+                    cameraSelect.appendChild(option);
+                });
+
+                // Handle camera change
+                cameraSelect.addEventListener('change', () => {
+                    const selectedDeviceId = cameraSelect.value;
+                    startStream(selectedDeviceId);
+                });
+
+                // Start with the first camera
+                if (videoDevices.length > 0) {
+                    startStream(videoDevices[0].deviceId);
+                }
+            } catch (err) {
+                console.error('Error accessing camera: ', err);
+            }
+        }
+
+        async function startStream(deviceId) {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: deviceId } } });
+                const liveVideo = document.getElementById('live-video');
+                liveVideo.srcObject = stream;
+            } catch (err) {
+                console.error('Error accessing camera: ', err);
+            }
+        }
+
+        startCamera();
+    </script>
+</body>
+</html>
+

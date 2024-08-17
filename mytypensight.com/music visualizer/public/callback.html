@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Callback</title>
+    <script>
+        // Extract the access token from the URL hash
+        const hash = window.location.hash.substring(1).split('&').reduce((initial, item) => {
+            if (item) {
+                const parts = item.split('=');
+                initial[parts[0]] = decodeURIComponent(parts[1]);
+            }
+            return initial;
+        }, {});
+
+        window.location.hash = '';
+
+        // Save the token in localStorage or redirect back to the main page with the token
+        localStorage.setItem('spotify_token', hash.access_token);
+
+        // Redirect back to the main page
+        window.location.href = '/';
+    </script>
+</head>
+<body>
+</body>
+</html>
+
+

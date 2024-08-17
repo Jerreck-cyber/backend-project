@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality.com</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Personality.com</h1>
+        <div class="search-container">
+            <input type="text" placeholder="Search videos...">
+            <button>Search</button>
+        </div>
+    </header>
+    
+    <div id="sidebar" class="sidebar">
+        <div class="toggle-icon" id="toggle-btn">
+            &#9776;
+        </div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profiles</a></li>
+            <li><a href="#">Interactive Map</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Browse</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#" id="upload-link">Upload Video</a></li>
+            <li><a href="#">All</a></li>
+        </ul>
+    </div>
+    
+    <main>
+        <div class="content">
+            <h2>Trending Videos</h2>
+            <div class="video-grid" id="video-grid">
+                <div class="video-thumbnail">
+                    <video src="#" controls></video>
+                    <p class="video-title">My Video</p>
+                    <p>10 views • Just now</p>
+                </div>
+                <div class="video-thumbnail">
+                    <video src="#" controls></video>
+                    <p class="video-title">Another Video</p>
+                    <p>50 views • 1 hour ago</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Hidden file input for video upload -->
+    <input type="file" id="video-upload" accept="video/*" style="display: none;">
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
+

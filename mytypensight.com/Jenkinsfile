@@ -1,6 +1,5 @@
 pipeline {
     agent any
-<<<<<<< HEAD
 
     environment {
         DB_USER = 'postgres'
@@ -51,36 +50,10 @@ pipeline {
             steps {
                 script {
                     // Post-processing tasks like sending notifications
-=======
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git url: 'https://github.com/Jerreck-cyber/backend-project.git', branch: 'main'
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'echo Building the project...'
-                // Add your actual build commands here, e.g., npm install, mvn clean install, etc.
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'echo Running tests...'
-                // Add your actual test commands here, e.g., npm test, mvn test, etc.
-            }
-        }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('MySonarQube Server') {
-                    sh 'mvn clean verify sonar:sonar'
-                    // Replace 'mvn clean verify sonar:sonar' with your actual SonarQube command if using something other than Maven.
->>>>>>> 080e6c169d387e711f44b843c22bfa123dfd43ff
                 }
             }
         }
     }
-<<<<<<< HEAD
 
     post {
         always {
@@ -91,11 +64,6 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed!'
-=======
-    post {
-        always {
-            echo 'Pipeline completed.'
->>>>>>> 080e6c169d387e711f44b843c22bfa123dfd43ff
         }
     }
 }

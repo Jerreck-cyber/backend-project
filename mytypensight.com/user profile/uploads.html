@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploads - Personality.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body class="dark-theme">
+    <div class="sidebar" id="sidebar">
+        <nav>
+            <a href="profile.html">Profile</a>
+            <a href="#" id="editProfileLink">Edit Profile</a>
+            <div id="editProfileOptions" class="hidden">
+                <label for="uploadProfilePicture">Upload Profile Picture</label>
+                <input type="file" id="uploadProfilePicture">
+                <label for="uploadBackground">Upload Webpage Background</label>
+                <input type="file" id="uploadBackground">
+            </div>
+            <a href="#" id="uploadVideoLink">Upload Video</a>
+            <input type="file" id="uploadVideo" class="hidden" accept="video/*">
+            <a href="video-uploads.html">Video Display</a>
+            <a href="#">Settings</a>
+            <a href="#">Privacy</a>
+            <a href="#">Logout</a>
+        </nav>
+        <div class="sidebar-footer">
+            <p>&copy; 2024 Personality.com. All rights reserved.</p>
+            <div>
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+    <header id="header">
+        <nav>
+            <div class="logo">Personality.com</div>
+            <div class="nav-container">
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Profiles</a>
+                    <a href="interactive-map.html">Interactive Map</a>
+                    <a href="#">Browse</a>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search profiles..." id="searchInput">
+                    <button id="searchButton">Search</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="content" id="content">
+        <h2>Upload Videos</h2>
+        <label for="uploadVideo" class="upload-button">Upload Video</label>
+        <input type="file" id="uploadVideo" class="hidden" accept="video/*">
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+

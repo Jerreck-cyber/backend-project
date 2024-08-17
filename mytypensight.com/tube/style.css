@@ -1,0 +1,337 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2d2d2d;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #2196F3;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    line-height: 30px;
+    margin-right: 20px; /* Adjust margin as needed */
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+header input[type="text"] {
+    padding: 8px;
+    width: 300px;
+    border-radius: 20px 0 0 20px;
+    border: 1px solid #ccc;
+    border-right: none;
+}
+
+header button {
+    padding: 8px 12px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+header button:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+header nav a:hover {
+    background-color: #005a9e;
+    transform: scale(1.05);
+}
+
+main {
+    display: flex;
+    margin-top: 60px;
+    flex: 1;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    padding: 20px;
+    position: fixed;
+    height: calc(100% - 60px);
+    overflow-y: auto;
+    top: 60px;
+    transition: width 0.3s;
+}
+
+.sidebar.collapsed {
+    width: 60px;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #505050;
+    transform: scale(1.05);
+}
+
+.content {
+    margin-left: 270px;
+    padding: 20px;
+    flex: 1;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    min-height: calc(100vh - 100px);
+    transition: margin-left 0.3s;
+}
+
+.content.expanded {
+    margin-left: 70px;
+}
+
+.video-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.video-thumbnail {
+    margin: 10px 0;
+    border: 1px solid #444;
+    padding: 10px;
+    background-color: #222;
+    width: calc(25% - 20px);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.video-thumbnail:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.video-thumbnail video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.video-thumbnail p {
+    margin: 5px 0;
+    padding-left: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #333;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+footer a {
+    color: #2196F3;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+footer a:hover {
+    color: #005a9e;
+    transform: scale(1.05);
+}
+
+.menu {
+    background: linear-gradient(145deg, #3c3c3c, #4c4c4c);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 
+                0 4px 6px rgba(0, 0, 0, 0.2) inset,
+                0 -2px 4px rgba(0, 0, 0, 0.1) inset;
+    border: 1px solid #555;
+    padding: 20px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.recent, .highlight, .suggestions, .image-section {
+    margin-bottom: 20px;
+}
+
+.recent h2, .suggestions h2, .image-section h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ccc;
+}
+
+.recent ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recent li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 10px 0;
+    transition: background-color 0.3s, border-left 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.recent li:hover {
+    background-color: #505050;
+    border-radius: 5px;
+    border-left: 3px solid #0078d4;
+}
+
+.recent li img {
+    width: 32px;
+    height: 32px;
+    margin-right: 25px;
+}
+
+.recent li span {
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.highlight img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.highlight-text {
+    text-align: center;
+}
+
+.highlight-text h3 {
+    margin: 20px 0;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #f0f0f0;
+}
+
+.highlight-text button {
+    background-color: #0078d4;
+    color: #fff;
+    border: none;
+    padding: 10px 30px;
+    margin: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.highlight-text button:hover {
+    background-color: #005a9e;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.suggestions {
+    display: flex;
+    flex-direction: column;
+}
+
+.game-suggestions, .travel-suggestions {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.game-suggestions div, .travel-suggestions div {
+    min-width: 100px;
+    margin-right: 20px;
+    background-color: #4c4c4c;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-suggestions div:hover, .travel-suggestions div:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.game-suggestions div img, .travel-suggestions div img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+.image-section .featured-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.image-section .featured-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
