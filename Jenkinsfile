@@ -8,6 +8,7 @@ pipeline {
         DB_NAME = 'mytypensight'
         DB_HOST = 'localhost'
         API_BASE_URL = 'https://api.worldbank.org/v2'
+        SONAR_HOST_URL = 'http://localhost:9000'
     }
 
     stages {
