@@ -1,15 +1,18 @@
 pipeline {
     agent any
 
+    environment {
+        DB_USER = 'postgres'
+        DB_PASSWORD = 'Jrock007'
+        DB_NAME = 'mytypensight'
+        DB_HOST = 'localhost'
+        API_BASE_URL = 'https://api.worldbank.org/v2'
+    }
+
     stages {
-        stage('Initialize') {
+        stage('Checkout') {
             steps {
-                script {
-                    // Clean workspace before starting
-                    deleteDir()
-                    // Clone the repository
-                    checkout scm
-                }
+                git url: 'https://github.com/your-repository.git'
             }
         }
 
@@ -19,40 +22,48 @@ pipeline {
             }
         }
 
-        stage('Fetch World Bank Data') {
+        stage('Data Collection') {
             steps {
                 script {
-                    // Here, you can write a script or call a Python script that fetches data from the World Bank API
-                    sh 'python fetch_worldbank_data.py'
+                    sh 'python collect_world_bank_data.py'
                 }
             }
         }
 
-        stage('Store Data in PostgreSQL') {
+        stage('Data Processing') {
             steps {
                 script {
-                    // After fetching, store the data in PostgreSQL
-                    sh 'python store_data_postgres.py'
+                    sh 'python process_world_bank_data.py'
                 }
             }
         }
 
-        stage('Cleanup') {
+        stage('Data Insertion') {
             steps {
-                cleanWs()
+                script {
+                    sh 'python insert_data_to_db.py'
+                }
+            }
+        }
+
+        stage('Post-Processing') {
+            steps {
+                script {
+                    // Post-processing tasks like sending notifications
+                }
             }
         }
     }
 
     post {
         always {
-            echo 'Pipeline execution complete.'
+            archiveArtifacts artifacts: '**/logs/*.log', allowEmptyArchive: true
         }
         success {
-            echo 'Pipeline completed successfully.'
+            echo 'Data collection and insertion completed successfully.'
         }
         failure {
-            echo 'Pipeline failed.'
+            echo 'Pipeline failed!'
         }
     }
 }
