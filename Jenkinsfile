@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    environment {
+        DB_USER = 'postgres'
+        DB_PASSWORD = 'Jrock007'
+        DB_NAME = 'mytypensight'
+        DB_HOST = 'localhost'
+        API_BASE_URL = 'https://api.worldbank.org/v2'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/your-repository.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Data Collection') {
+            steps {
+                script {
+                    sh 'python collect_world_bank_data.py'
+                }
+            }
+        }
+
+        stage('Data Processing') {
+            steps {
+                script {
+                    sh 'python process_world_bank_data.py'
+                }
+            }
+        }
+
+        stage('Data Insertion') {
+            steps {
+                script {
+                    sh 'python insert_data_to_db.py'
+                }
+            }
+        }
+
+        stage('Post-Processing') {
+            steps {
+                script {
+                    // Post-processing tasks like sending notifications
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: '**/logs/*.log', allowEmptyArchive: true
+        }
+        success {
+            echo 'Data collection and insertion completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
